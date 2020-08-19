@@ -2,30 +2,51 @@
   <div>
     <ul class="types">
       <li :class="type==='-' && 'selected'" @click="selectType('-')">支出</li>
-      <li :class="type==='+' && 'selected'" @click="selectType('+')" >收入</li>
+      <li :class="type==='+' && 'selected'" @click="selectType('+')">收入</li>
     </ul>
   </div>
 </template>
 
-<script >
-  console.log('11111111')
-  export default {
-    name: 'Types',
-    data(){
-      return{
-        type:'-'//减号表示支出，加好表示收入
-      }
-    },
-    methods:{
-      selectType(type){
-        console.log('000')
-        if(type!=='-'&&type!=='+'){
-          throw new Error('type is unknown')
-        }
-        this.type =type
-      }
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  const GreetingProps = Vue.extend({
+    props: {
+      name: String
     }
-  };
+  })
+
+  @Component
+  export default class Types extends Vue {
+    type = '-';//减号表示支出，加好表示收入
+    get message(): string {
+      // this.name will be typed
+      return 'Hello, ' + this.name
+    }
+    selectType(type: string) {
+      if (type !== '-' && type !== '+') {
+        throw new Error('type is unknown');
+      }
+      this.type = type;
+    }
+  }
+  // export default {
+  //   name: 'Types',
+  //   data(){
+  //     return{
+  //       type:'-'//减号表示支出，加好表示收入
+  //     }
+  //   },
+  //   methods:{
+  //     selectType(type){
+  //       if(type!=='-'&&type!=='+'){
+  //         throw new Error('type is unknown')
+  //       }
+  //       this.type =type
+  //     }
+  //   }
+  // };
 </script>
 
 <style lang="scss" scoped>
@@ -34,6 +55,7 @@
     display: flex;
     text-align: center;
     font-size: 24px;
+
     > li {
       width: 50%;
       height: 64px;
@@ -41,6 +63,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+
       &.selected::after {
         content: '';
         position: absolute;
