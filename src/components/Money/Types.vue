@@ -9,21 +9,13 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
-
-  const GreetingProps = Vue.extend({
-    props: {
-      name: String
-    }
-  })
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
     type = '-';//减号表示支出，加好表示收入
-    get message(): string {
-      // this.name will be typed
-      return 'Hello, ' + this.name
-    }
+
+
     selectType(type: string) {
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
@@ -31,22 +23,6 @@
       this.type = type;
     }
   }
-  // export default {
-  //   name: 'Types',
-  //   data(){
-  //     return{
-  //       type:'-'//减号表示支出，加好表示收入
-  //     }
-  //   },
-  //   methods:{
-  //     selectType(type){
-  //       if(type!=='-'&&type!=='+'){
-  //         throw new Error('type is unknown')
-  //       }
-  //       this.type =type
-  //     }
-  //   }
-  // };
 </script>
 
 <style lang="scss" scoped>
