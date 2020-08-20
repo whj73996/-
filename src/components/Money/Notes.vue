@@ -11,13 +11,17 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component,Watch} from 'vue-property-decorator';
 
   @Component
   export default class Notes extends Vue{
     value='' //v-model = "value"可以代替
             // ：value 和 @ input = "value = $event.target.value"
             //是她两的语法糖
+    @Watch('value')
+    onValueChanged(value: string){
+      this.$emit('update:value',value)
+    }
   }
 </script>
 
