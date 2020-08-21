@@ -14,21 +14,23 @@
   import Notes from '@/components/Money/Notes.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component,Watch} from 'vue-property-decorator';
-  import model from '@/model';
+  import recordListModel from '@/models/recordListModel';
+  import tagListModel from '@/models/tagListModel';
   //Ts和js配合只能用require
   // const model = require ('@/model.js').default;
   // require不识别default，得自己在后面加一个Default
   //const {model} = require ('@/model.js') 也可以用析构
   //export {model} 也可以这么导出
 
-  const recordList = model.fetch()
+  const recordList = recordListModel.fetch()
+  tagListModel.fetch()
 
   @Component({
     components:{Tags, Notes, Types, NumberPad}
   })
   export default class Money extends Vue{
 
-    tags=['衣','食','住','行','烫头'];
+    tags=tagListModel.data;
 
     record: RecordItem={
       tags:[],
@@ -48,7 +50,7 @@
       this.record.amount=parseFloat(value);
     }
     saveRecord(){
-      const record2 = model.clone(this.record);    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
+      const record2 = recordListModel.clone(this.record);    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
       console.log(record2);
       record2.createdAt = new Date()                                                          //所以这里用了深拷贝
       this.recordList.push(record2)
@@ -58,7 +60,7 @@
     @Watch('recordList')
     onRecordListChange(){
       console.log('6546465');
-      model.save(this.recordList)
+      recordListModel.save(this.recordList)
     }
   }
 </script>
