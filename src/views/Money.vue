@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{record}}
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes @update:value="onUpdateNotes"/>
@@ -20,13 +19,14 @@
     notes: string;
     type: string;
     amount: number;
+    createdAt?: Date; //TS的数据类型也可以写类
   }               //复杂对象类型声明
   @Component({
     components:{Tags, Notes, Types, NumberPad}
   })
   export default class Money extends Vue{
     tags=['衣','食','住','行','烫头'];
-    recordList: Record[]=[]
+    recordList: Record[]=JSON.parse(window.localStorage.getItem('recordList')||'[]')
     record: Record={
       tags:[],
       notes:'',
@@ -44,8 +44,8 @@
       this.record.amount=parseFloat(value);
     }
     saveRecord(){
-      const record2= JSON.parse(JSON.stringify(this.record))    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
-                                                                //所以这里用了深拷贝
+      const record2: Record= JSON.parse(JSON.stringify(this.record))    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
+      record2.createdAt = new Date()                                                          //所以这里用了深拷贝
       this.recordList.push(record2)
     }
 
