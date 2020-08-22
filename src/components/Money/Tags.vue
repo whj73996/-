@@ -48,6 +48,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column-reverse;
+    background-color: white;
     > .current {
       display: flex;
       flex-wrap: wrap;
