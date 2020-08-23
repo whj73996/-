@@ -10,8 +10,6 @@ const recordListModel={
   },
   fetch(){
     this.data=JSON.parse(window.localStorage.getItem(localStorageKeyName)||`[]`)as RecordItem[]
-    // 强制类型
-    // TS的断言
     return this.data
   },
   save(){

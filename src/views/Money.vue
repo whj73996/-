@@ -28,14 +28,14 @@
   //export {model} 也可以这么导出
 
   const recordList = recordListModel.fetch()
-  tagListModel.fetch()
+
 
   @Component({
     components:{Tags,FormItem, Types, NumberPad}
   })
   export default class Money extends Vue{
 
-    tags=tagListModel.data;
+    tags=window.tagList;
 
     record: RecordItem={
       tags:[],
