@@ -3,7 +3,8 @@
     <label class="formItem">
       <span class="name">{{fieldName}}</span>
       <input type="text"
-             v-model="value"
+             :value="value"
+             @input="onValueChanged($event.target.value)"
              :placeholder="placeholder">
     </label>
   </div>
@@ -17,9 +18,10 @@
   export default class FormItem extends Vue{
     @Prop({required:true})fieldName!: string
     @Prop()placeholder?: string
-    value='' //v-model = "value"可以代替
-            // ：value 和 @ input = "value = $event.target.value"
-            //是她两的语法糖
+    @Prop({default:''})readonly value!: string
+    //v-model = "value"可以代替
+    // ：value 和 @ input = "value = $event.target.value"
+    //是她两的语法糖
     @Watch('value')
     onValueChanged(value: string){
       this.$emit('update:value',value)
