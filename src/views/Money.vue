@@ -55,11 +55,7 @@
       this.record.amount=parseFloat(value);
     }
     saveRecord(){
-      const record2 = recordListModel.clone(this.record);    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
-      console.log(record2);
-      record2.createdAt = new Date()                                                          //所以这里用了深拷贝
-      this.recordList.push(record2)
-      console.log('push进数据：'+ this.recordList);
+      recordListModel.create(this.record)
     }
 
     @Watch('recordList')
