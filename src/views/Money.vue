@@ -64,8 +64,7 @@
 
     @Watch('recordList')
     onRecordListChange(){
-      console.log('6546465');
-      recordListModel.save(this.recordList)
+      recordListModel.save()
     }
   }
 </script>
