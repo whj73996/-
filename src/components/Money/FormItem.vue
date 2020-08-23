@@ -22,7 +22,6 @@
     //v-model = "value"可以代替
     // ：value 和 @ input = "value = $event.target.value"
     //是她两的语法糖
-    @Watch('value')
     onValueChanged(value: string){
       this.$emit('update:value',value)
     }
