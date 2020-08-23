@@ -47,6 +47,7 @@
     remove(){
       if(this.tag){
         tagListModel.remove(this.tag.id)
+        this.goBack()
       }
     }
     goBack(){
