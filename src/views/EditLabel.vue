@@ -1,7 +1,8 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="back"></Icon>
+      <Icon class="leftIcon" name="back"
+            @click="goBack"></Icon>
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
@@ -47,6 +48,9 @@
       if(this.tag){
         tagListModel.remove(this.tag.id)
       }
+    }
+    goBack(){
+      this.$router.back()
     }
   }
 </script>
