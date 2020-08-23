@@ -6,10 +6,12 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <form-item :value="tag.name" field-name="标签名" placeholder="点击输入备注" ></form-item>
+      <form-item :value="tag.name"
+                 @update:value="update"
+                 field-name="标签名" placeholder="点击输入备注" ></form-item>
     </div>
     <div class="button-wrapper">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -35,6 +37,15 @@
         this.tag=tag
       }else {
         this.$router.replace('/404') //push回退不了
+      }
+    }
+    update(name: string){
+      if(this.tag){tagListModel.update(this.tag.id,name)
+      }
+    }
+    remove(){
+      if(this.tag){
+        tagListModel.remove(this.tag.id)
       }
     }
   }
