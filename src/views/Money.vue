@@ -18,16 +18,14 @@
   import Types from '@/components/Money/Types.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
-  import {Component,Watch} from 'vue-property-decorator';
-  import recordListModel from '@/models/recordListModel';
-  import tagListModel from '@/models/tagListModel';
+  import {Component} from 'vue-property-decorator';
+  import store from '@/store/index2';
   //Ts和js配合只能用require
   // const model = require ('@/model.js').default;
   // require不识别default，得自己在后面加一个Default
   //const {model} = require ('@/model.js') 也可以用析构
   //export {model} 也可以这么导出
 
-  const recordList = recordListModel.fetch()
 
 
   @Component({
@@ -35,7 +33,7 @@
   })
   export default class Money extends Vue{
 
-    tags=window.tagList;
+    tags=store.tagList;
 
     record: RecordItem={
       tags:[],
@@ -43,7 +41,7 @@
       type:'-',
       amount:0
     }
-    recordList = recordList
+    recordList = store.recordList
 
     onUpdateTags(value: string[]){
       this.record.tags=value;
@@ -55,12 +53,7 @@
       this.record.amount=parseFloat(value);
     }
     saveRecord(){
-      recordListModel.create(this.record)
-    }
-
-    @Watch('recordList')
-    onRecordListChange(){
-      recordListModel.save()
+     store.createRecord(this.record)
     }
   }
 </script>
