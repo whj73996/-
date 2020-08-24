@@ -31,8 +31,7 @@
 
     created(){
       const id  = this.$route.params.id
-      tagListModel.fetch()
-      const tags =tagListModel.data
+      const tags =window.tagList
       const tag = tags.filter(t => t.id === id)[0]
       if(tag){
         this.tag=tag
@@ -47,7 +46,7 @@
     remove(){
       if(this.tag){
         tagListModel.remove(this.tag.id)
-        this.goBack()
+        this.$router.back()
       }
     }
     goBack(){

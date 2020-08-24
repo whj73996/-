@@ -15,9 +15,14 @@ Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
 
 window.tagList = tagListModel.fetch()
-
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+window.createTag=(name: string)=> {
+  if (name) {
+    const message = tagListModel.create(name)
+    window.alert(message)
+  }
+}
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')

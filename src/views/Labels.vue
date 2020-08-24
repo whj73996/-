@@ -26,10 +26,9 @@
   export default class Tags extends Vue{
     tags =  window.tagList
     createTag(){
-      const name = window.prompt('请输入标签名')
-      if(name){
-        const  message = tagListModel.create(name)
-        window.alert(message)
+      const message = window.prompt('请输入标签名')
+      if(message){
+        window.createTag(message)
       }
     }
 
