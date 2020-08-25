@@ -10,23 +10,7 @@ type Tag = {
   id: string;
   name: string;
 }
-type TagListModel = {
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: string) => '标签名重复' | '新建成功'; // ts会提示接受信息者字符串内容(联合类型)
-  update: (id: string, name: string) => 'success' | 'notFound' | 'duplicated';
-  remove: (id: string) => true;
-  save: () => void;
-}
-interface Window {
-  store: {
-    tagList: Tag[];
-    createTag: (name: string) => void;
-    removeTag: (id: string) => boolean;
-    updateTag: (d: string, name: string) => 'success' | 'notFound' | 'duplicated';
-    findTag: (id: string) => Tag | undefined;
 
-    recordList: RecordItem[];
-    createRecord: (record: RecordItem) => void;
-  };
+interface Window {
+
 }

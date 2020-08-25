@@ -1,22 +1,65 @@
-import tagListModel from '@/models/tagListModel';
+import createId from '@/lib/createrId';
 
-export default {
+const localStorageKeyName = 'tagList';
+
+const tagStore ={
   //tag store
 
-  tagList: tagListModel.fetch(),
+  tagList: []as Tag[],
+  fetchTags(){
+    this.tagList= JSON.parse(window.localStorage.getItem(localStorageKeyName) || `[]`);
+    return this.tagList;
+  },
   findTag: function(id: string){
     return this.tagList.filter(t => t.id === id)[0];
   },
-  createTag: (name: string) => {
-    if (name) {
-      const message = tagListModel.create(name);
-      window.alert(message);
+  createTag(name: string){
+
+    const names = this.tagList.map(item => item.name);
+    if (names.indexOf(name) >= 0) {
+      window.alert('标签名重复');
+      return '标签名重复';
+    }
+    const id = createId().toString()
+    this.tagList.push({id, name: name});
+    this.saveTags();
+    window.alert('添加成功')
+    return '添加成功';
+
+  },
+  removeTag(id: string){
+    let index = -1
+    for(let i=0;i<=this.tagList.length;i++){
+      if(this.tagList[i].id===id){
+        index=i
+        break
+      }
+    }
+    this.tagList.splice(index,1)
+    this.saveTags()
+    return true
+  },
+  updateTag(id: string, name: string){
+    const idList = this.tagList.map(item => item.id);
+    if (idList.indexOf(id) >= 0) {
+      const nameList = this.tagList.map(item => item.name);
+      if (nameList.indexOf(name) >= 0) {
+        return 'duplicated';
+      } else {
+        const tag = this.tagList.filter(item => item.id === id)[0];
+        tag.name = name;
+        this.saveTags();
+        return 'success';
+      }
+    } else {
+      return 'notFound';
     }
   },
-  removeTag: (id: string) => {
-    return tagListModel.remove(id);
-  },
-  updateTag: (id: string, name: string) => {
-    return tagListModel.update(id, name);
+  saveTags() {
+    window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.tagList))
   }
 }
+
+tagStore.fetchTags()
+
+export default tagStore
