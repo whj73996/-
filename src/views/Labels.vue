@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="tags">
-      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
+      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tagList" :key="tag.id">
         <span>{{tag.name}}</span>
         <Icon name="right"></Icon>
       </router-link>
@@ -15,9 +15,10 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
   import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
+  import {mixins} from 'vue-class-component';
+  import {TagHelper} from '@/mixins/TagHelper';
 
   @Component({
     components:{Button},
@@ -27,13 +28,11 @@
       }
     }
   })
-  export default class Tags extends Vue{
-    createTag(){
-      const message = window.prompt('请输入标签名')
-      if(message){
-       // this.$store.createTag(message)
-      }
+  export default class Tags extends mixins(TagHelper){
+    created(){
+      this.$store.commit('fetchTags')
     }
+
 
   }
 </script>
