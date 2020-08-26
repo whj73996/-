@@ -1,12 +1,13 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="createTag">新增标签</button>
+      <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in tagList" :key="tag.id"
           :class="{selected:selectedTags.indexOf(tag.id)>=0}"
-          @click="toggle(tag.id)">{{tag.name}}</li>
+          @click="toggle(tag.id)">{{tag.name}}
+      </li>
     </ul>
   </div>
 
@@ -14,29 +15,36 @@
 
 
 <script lang="ts">
-  import Vue from 'vue'
-  import {Component, Prop} from 'vue-property-decorator';
-  import store from '@/store/index2';
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
 
-  @Component
-  export default class Tags extends Vue{
-    @Prop() dataSource: string[]|undefined;   //Prop后面的东西一半不用写
-    selectedTags: string[]=[];
-    toggle(tag: string){
-      const index = this.selectedTags.indexOf(tag)
-      if(index>=0){
-        this.selectedTags.splice(index,1)
-      }else {
-        this.selectedTags.push(tag)
+  @Component({
+    computed:{
+      tagList(){
+       return  this.$store.state.tagList
       }
-      this.$emit('update:value',this.selectedTags)
     }
-    createTag(){
-      const name = window.prompt('请输入标签名')
-      if(name){
-        const  message = store.createTag(name)
-        window.alert(message)
+  })
+  export default class Tags extends Vue {
+    selectedTags: string[] = [];
+
+    toggle(tag: string) {
+      const index = this.selectedTags.indexOf(tag);
+      if (index >= 0) {
+        this.selectedTags.splice(index, 1);
+      } else {
+        this.selectedTags.push(tag);
       }
+      this.$emit('update:value', this.selectedTags);
+    }
+
+    create() {
+      const name = window.prompt('请输入标签名');
+      if (!name) {
+        return window.alert('标签名不能为空');
+      }
+      this.$store.commit('createTag',name)
+
     }
   }
 </script>
@@ -49,12 +57,14 @@
     display: flex;
     flex-direction: column-reverse;
     background-color: white;
+
     > .current {
       display: flex;
       flex-wrap: wrap;
+
       > li {
-        $bg:#d9d9d9;
-        background:$bg;
+        $bg: #d9d9d9;
+        background: $bg;
         $h: 24px;
         height: $h;
         line-height: $h;
@@ -62,14 +72,17 @@
         padding: 0 16px;
         margin-right: 12px;
         margin-top: 4px;
-        &.selected{
-          background-color: darken($bg,50%);
+
+        &.selected {
+          background-color: darken($bg, 50%);
           color: white;
         }
       }
     }
+
     > .new {
       padding-top: 16px;
+
       button {
         background: transparent;
         border: none;

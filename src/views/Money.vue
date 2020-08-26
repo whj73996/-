@@ -8,7 +8,7 @@
                 placeholder="点击输入备注"
       />
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
   </Layout>
 </template>
 
@@ -19,7 +19,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2';
+  import Button from '@/components/Button.vue';
   //Ts和js配合只能用require
   // const model = require ('@/model.js').default;
   // require不识别default，得自己在后面加一个Default
@@ -29,23 +29,28 @@
 
 
   @Component({
-    components:{Tags,FormItem, Types, NumberPad}
+    components:{Button, Tags,FormItem, Types, NumberPad},
+    computed:{   //一定要用计算属性，数据跟新，重新渲染
+      recordList(){
+        return this.$store.state.recordList
+      }
+    }
   })
   export default class Money extends Vue{
 
-    tags=store.tagList;
 
     record: RecordItem={
       tags:[],
       notes:'',
       type:'-',
       amount:0
+    };
+    created(){
+      this.$store.commit('fetchRecords')
     }
-    recordList = store.recordList
 
-    onUpdateTags(value: string[]){
-      this.record.tags=value;
-    }
+
+
     onUpdateNotes(value: string){
       this.record.notes=value;
     }
@@ -53,7 +58,7 @@
       this.record.amount=parseFloat(value);
     }
     saveRecord(){
-     store.createRecord(this.record)
+     this.$store.commit('createRecord',this.record)
     }
   }
 </script>
