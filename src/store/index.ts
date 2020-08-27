@@ -9,12 +9,14 @@ Vue.use(Vuex)
 type rootState = {
     recordList: RecordItem[];
     tagList: Tag[];
+    selectedTags: Tag[];
     currentTag?: Tag;
 }
 const store =  new Vuex.Store({
   state: {
     recordList:[],
     tagList: [],
+    selectedTags:[],
     currentTag:undefined
   }as rootState,
   mutations:{ //methods

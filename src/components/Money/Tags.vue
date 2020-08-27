@@ -5,8 +5,8 @@
     </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
-          :class="{selected:selectedTags.indexOf(tag.id)>=0}"
-          @click="toggle(tag.id)">{{tag.name}}
+          :class="{selected:selectedTags.indexOf(tag.name)>=0}"
+          @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
   </div>
@@ -28,12 +28,13 @@
       return  this.$store.state.tagList
     }
 
-    toggle(tag: string) {
-      const index = this.selectedTags.indexOf(tag);
+
+    toggle(tag: Tag) {
+      const index = this.selectedTags.indexOf(tag.name);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);
       } else {
-        this.selectedTags.push(tag);
+        this.selectedTags.push(tag.name);
       }
       this.$emit('update:value', this.selectedTags);
     }

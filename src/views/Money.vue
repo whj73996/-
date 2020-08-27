@@ -8,7 +8,7 @@
                 placeholder="点击输入备注"
       />
     </div>
-    <Tags/>
+    <Tags @update:value="onUpdateTags"/>
   </Layout>
 </template>
 
@@ -59,6 +59,9 @@
     }
     saveRecord(){
      this.$store.commit('createRecord',this.record)
+    }
+    onUpdateTags(value: string[]){
+      this.record.tags = value
     }
   }
 </script>
