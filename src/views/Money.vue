@@ -30,14 +30,13 @@
 
   @Component({
     components:{Button, Tags,FormItem, Types, NumberPad},
-    computed:{   //一定要用计算属性，数据跟新，重新渲染
-      recordList(){
-        return this.$store.state.recordList
-      }
-    }
+
   })
   export default class Money extends Vue{
 
+    get recordList(){
+      return this.$store.state.recordList
+    }
 
     record: RecordItem={
       tags:[],
