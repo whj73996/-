@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
-    <Tabs class-prefix="type" :data-source="moneyTypeList" :value.sync="type"></Tabs>
+    <Tabs :data-source="recordTypeList" :value.sync="record.type"></Tabs>
     <div class="notes">
       <FormItem field-name="备注"
                 @update:value="onUpdateNotes"
@@ -19,8 +19,8 @@
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  import moneyTypeList from '@/constants/moneyTypeList';
   import Tabs from '@/components/Tabs.vue';
+  import recordTypeList from '@/constants/recordTypeList';
   //Ts和js配合只能用require
   // const model = require ('@/model.js').default;
   // require不识别default，得自己在后面加一个Default
@@ -35,9 +35,7 @@
   })
   export default class Money extends Vue{
 
-    type='-'
-    moneyTypeList=moneyTypeList
-
+    recordTypeList=recordTypeList
 
     get recordList(){
       return this.$store.state.recordList
