@@ -26,3 +26,15 @@ window.addEventListener("load",function() {
     window.scrollTo(0, 10000);
   }, 0);
 });
+
+if(document.documentElement.clientWidth>500){
+  window.alert('为了保证使用体验，请用手机打开本网页')
+  const img = document.createElement('img')
+  img.src='/qrcode.png'
+  document.body.appendChild(img)
+  img.style.position='fixed'
+  img.style.left='50%'
+  img.style.top='50%'
+  img.style.transform='translateX(-50%) translateY(-50%)'
+  img.style.boxShadow='0 0 10px rgba(0,0,0,0.2)'
+}
