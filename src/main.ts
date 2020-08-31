@@ -20,3 +20,9 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
+
+window.addEventListener("load",function() {
+  setTimeout(function(){
+    window.scrollTo(0, 10000);
+  }, 0);
+});

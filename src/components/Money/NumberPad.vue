@@ -22,10 +22,16 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Prop,Watch} from 'vue-property-decorator';
 
   @Component
   export default class NumberPad extends Vue {
+    @Prop(Number)value!: number
+    @Prop()isClear!: boolean
+    @Watch('isClear')
+    onIsClearChanged(){
+      if(this.isClear)this.output='0'
+    }
     output='0';
     inputContent(event: MouseEvent){
       const button = (event.target as HTMLButtonElement)
@@ -53,10 +59,10 @@
       this.output ='0'
     }
     ok(){
-      this.$emit('update:value',this.output)
+      this.$emit('update:value',parseFloat(this.output))
       this.$emit('submit')
-      this.output = '0'
     }
+
   }
 </script>
 

@@ -1,9 +1,16 @@
+type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  createTagError: Error | null;
+  currentTag?: Tag;
+}
+
 type RecordItem = {
-  tags: string[];
+  tags: Tag[];
   notes: string;
   type: string;
   amount: number;
-  createdAt?: Date; //TS的数据类型也可以写类
+  createdAt?: string; //TS的数据类型也可以写类
 }               //复杂对象类型声明
 
 type Tag = {

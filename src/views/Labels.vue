@@ -2,7 +2,7 @@
   <Layout>
     <div class="tags">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tagList" :key="tag.id">
-        <span>{{tag.name}}</span>
+        <span >{{tag.name}}</span>
         <Icon name="right"></Icon>
       </router-link>
     </div>
@@ -39,6 +39,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "src/assets/style/helper";
   .tags{
     background-color: white;
     font-size: 16px;
@@ -46,9 +47,15 @@
     >.tag{
       min-height: 44px;
       display: flex;
+      padding-left: 100px;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #e6e6e6;
+      >span{
+        padding: 2px 8px;
+        background-color: #ededed;
+        border-radius: 8px;
+      }
       >svg{
         width: 24px;
         height: 24px;
@@ -58,7 +65,7 @@
     }
   }
   .createTag{
-    background-color: #767676;
+    background-color: darken($beSelected-color,42%);
     color: white;
     border-radius: 4px;
     border: none;

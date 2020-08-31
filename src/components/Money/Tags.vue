@@ -5,7 +5,7 @@
     </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
-          :class="{selected:selectedTags.indexOf(tag.name)>=0}"
+          :class="{selected:selected(tag)}"
           @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
@@ -19,22 +19,25 @@
   import {mixins} from 'vue-class-component';
   import {TagHelper} from '@/mixins/TagHelper';
 
-  @Component({
-
-  })
+  @Component
   export default class Tags extends mixins(TagHelper) {
-    selectedTags: string[] = [];
+
+    selectedTags: Tag[] = [];
     get tagList(){
       return  this.$store.state.tagList
     }
 
-
+    selected(tag: Tag){
+      const selectedTagsName = this.selectedTags.map(items => items.name)
+      return selectedTagsName.indexOf(tag.name)>=0
+    }
     toggle(tag: Tag) {
-      const index = this.selectedTags.indexOf(tag.name);
+      const selectedTagsName = this.selectedTags.map(items => items.name)
+      const index = selectedTagsName.indexOf(tag.name);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);
       } else {
-        this.selectedTags.push(tag.name);
+        this.selectedTags.push(tag);
       }
       this.$emit('update:value', this.selectedTags);
     }
@@ -44,6 +47,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "src/assets/style/helper";
   .tags {
     font-size: 14px;
     padding: 16px;
@@ -57,8 +61,8 @@
       flex-wrap: wrap;
 
       > li {
-        $bg: #d9d9d9;
-        background: $bg;
+        background:$beSelected-color;
+      ;
         $h: 24px;
         height: $h;
         line-height: $h;
@@ -68,7 +72,7 @@
         margin-top: 4px;
 
         &.selected {
-          background-color: darken($bg, 50%);
+          background-color: $selected-color;
           color: white;
         }
       }

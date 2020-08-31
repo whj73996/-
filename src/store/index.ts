@@ -6,19 +6,14 @@ import router from '@/router';
 
 
 Vue.use(Vuex)
-type rootState = {
-    recordList: RecordItem[];
-    tagList: Tag[];
-    selectedTags: Tag[];
-    currentTag?: Tag;
-}
+
 const store =  new Vuex.Store({
-  state: {
+  state:{
     recordList:[],
     tagList: [],
-    selectedTags:[],
+    createTagError:null,
     currentTag:undefined
-  }as rootState,
+  }as RootState,
   mutations:{ //methods
     setCurrentTag(state,id: string){
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
@@ -31,10 +26,13 @@ const store =  new Vuex.Store({
         JSON.stringify(state.recordList));
     },
     createRecord(state,record: RecordItem) {
+
       const record2 = clone(record);    //直接push record的话，其实是浅拷贝，也就是说，每次push进来的record都是相同地址的那个对象，会出现localStorage里所有对象相同的情况
-      record2.createdAt = new Date();                                                          //所以这里用了深拷贝
+      record2.createdAt = new Date().toISOString();                                                          //所以这里用了深拷贝
       state.recordList?.push(record2);
       store.commit('saveRecords')
+      window.alert('记录已保存')
+      return true
     },
 
     fetchTags(state){
@@ -44,14 +42,12 @@ const store =  new Vuex.Store({
     createTag(state,name: string){
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
-        window.alert('标签名重复');
-        return '标签名重复';
+        state.createTagError = new Error('tag name duplicated')
       }
       const id = createId().toString()
-      state.tagList.push({id, name: name});
+      state.tagList.push({id:id, name: name});
       store.commit('saveTags');
-      window.alert('添加成功')
-      return '添加成功';
+      state.createTagError = new Error('success')
     },
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList))
