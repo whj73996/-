@@ -67,10 +67,11 @@
   .createTag{
     background-color: darken($beSelected-color,42%);
     color: white;
-    border-radius: 4px;
+    border-radius: 12px;
     border: none;
     height: 40px;
     padding: 0 16px;
+    opacity: 55%;
     &-wrapper{
       text-align: center;
       padding: 16px;

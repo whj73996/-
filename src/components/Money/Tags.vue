@@ -61,7 +61,8 @@
       flex-wrap: wrap;
 
       > li {
-        background:$beSelected-color;
+        $beSelected-color-grey:#d3d3d3;
+        background:$beSelected-color-grey;
       ;
         $h: 24px;
         height: $h;
@@ -72,8 +73,11 @@
         margin-top: 4px;
 
         &.selected {
-          background-color: $selected-color;
+          transition: all 0.3s;
+          background-color:darken($beSelected-color,45%);
           color: white;
+          box-shadow: 3px 6px 5px 0 rgba(0,0,0,.2);
+          transform: scale(1.1) translateX(-1px) translateY(-1px);
         }
       }
     }

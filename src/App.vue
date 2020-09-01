@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition>
+      <router-view ></router-view>
+    </transition>
   </div>
 </template>
+
 
 <style lang="scss">
   @import "~@/assets/style/helper.scss";
@@ -15,5 +18,6 @@
     font-size: 16px;
     line-height: 1.5;
     background-color:#f5f5f5 ;
+    transition: all .3s;
   }
 </style>

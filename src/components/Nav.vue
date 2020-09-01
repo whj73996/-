@@ -1,15 +1,15 @@
 <template>
   <nav>
     <router-link to="/money" class="tag" active-class="selected">
-      <Icon name="money"/>
+      <Icon class="logo" name="money"/>
       记账
     </router-link>
     <router-link to="/labels" class="tag" active-class="selected">
-      <Icon name="label"/>
+      <Icon class="logo" name="label"/>
       标签
     </router-link>
     <router-link to="/statistics" class="tag" active-class="selected">
-      <Icon name="statistics"/>
+      <Icon class="logo" name="statistics"/>
       统计
     </router-link>
   </nav>
@@ -35,13 +35,16 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      .icon {
+      &.selected .logo{
+        color:$selected-color;
+        transform:scale(1.1)
+      }
+
+      .logo {
         width: 32px;
         height: 32px;
       }
     }
-    > .tag.selected{
-      color:$selected-color;
-    }
+
   }
 </style>

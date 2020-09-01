@@ -2,7 +2,7 @@
   <div class="numberPad">
     <div class="output">{{output}}</div>
     <div class="buttons">
-      <button @click="inputContent">1</button>
+      <button @click="inputContent" @mousedown="shake">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
       <button @click="remove">删除</button>
@@ -29,6 +29,10 @@
     @Prop(Number)value!: number
     @Prop()isClear!: boolean
     @Watch('isClear')
+
+    shake(){
+
+    }
     onIsClearChanged(){
       if(this.isClear)this.output='0'
     }
@@ -78,9 +82,16 @@
       text-align: right;
       height: 72px;
     }
+    button:active{
+      transform: scale(1.05);
+      transition: transform 0.08s;
+    }
     .buttons {
       @extend %clearFix;
       > button {
+        font-size: 24px;
+        /*color: #666666;*/
+        color: white;
         width: 25%;
         height: 64px;
         float: left;
@@ -93,7 +104,7 @@
         &.zero {
           width: 25*2%;
         }
-        $bg: #f2f2f2;
+        $bg: #7f7776;
         &:nth-child(1) {
           background: $bg;
         }
