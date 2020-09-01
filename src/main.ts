@@ -30,7 +30,7 @@ window.addEventListener("load",function() {
 if(document.documentElement.clientWidth>500){
   window.alert('为了保证使用体验，请用手机打开本网页')
   const img = document.createElement('img')
-  img.src='/qrcode.png'
+  img.src='qrcode.png'
   document.body.appendChild(img)
   img.style.position='fixed'
   img.style.left='50%'
