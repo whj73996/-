@@ -30,6 +30,10 @@ window.addEventListener("load",function() {
 if(document.documentElement.clientWidth>500){
   window.alert('为了保证使用体验，请用手机打开本网页')
   const img = document.createElement('img')
+  const app= <HTMLElement>document.querySelector('#app')
+  app.style.maxWidth='500px'
+  app.style.margin='0 auto'
+
   img.src='qrcode.png'
   document.body.appendChild(img)
   img.style.position='fixed'
@@ -37,4 +41,7 @@ if(document.documentElement.clientWidth>500){
   img.style.top='50%'
   img.style.transform='translateX(-50%) translateY(-50%)'
   img.style.boxShadow='0 0 10px rgba(0,0,0,0.2)'
+  img.addEventListener('click',(e)=>{
+    img.style.display='none'
+  })
 }
