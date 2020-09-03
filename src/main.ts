@@ -21,6 +21,19 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 
+let toURL:any = null
+router.beforeEach((to, from, next) => {
+  if (toURL === to.path) {
+    next()
+  }
+  if (to.path !== from.path) {
+    toURL = to.path
+    router.replace(to.path)
+    next()
+  }
+})
+
+
 window.addEventListener("load",function() {
   setTimeout(function(){
     window.scrollTo(0, 10000);
@@ -44,4 +57,14 @@ if(document.documentElement.clientWidth>500){
   img.addEventListener('click',(e)=>{
     img.style.display='none'
   })
+}
+
+
+window.alert = function(name:string){
+  let iframe = document.createElement("IFRAME");
+  iframe.style.display="none";
+  iframe.setAttribute("src", 'data:text/plain,');
+  document.documentElement.appendChild(iframe);
+  window.frames[0].window.alert(name);
+  iframe.parentNode?.removeChild(iframe);
 }
