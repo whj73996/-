@@ -95,6 +95,7 @@
   ::v-deep {
     .type-tabs-item {
       background-color:#c4c4c4;
+      transition: all 0.3s ease;
       &.selected{
         background-color: white;
         &::after{
