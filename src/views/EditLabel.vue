@@ -28,8 +28,6 @@
   })
   export default class EditLabel extends Vue {
     get currentTag(){
-      console.log(this.$store.state.currentTag);
-
       return this.$store.state.currentTag
     }
 
