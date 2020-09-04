@@ -71,9 +71,10 @@
         padding: 0 16px;
         margin-right: 12px;
         margin-top: 4px;
+        transition: all 0.3s ease;
+
 
         &.selected {
-          transition: all 0.3s;
           background-color:darken($beSelected-color,45%);
           color: white;
           box-shadow: 3px 6px 5px 0 rgba(0,0,0,.2);
