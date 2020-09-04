@@ -28,6 +28,8 @@
   })
   export default class EditLabel extends Vue {
     get currentTag(){
+      console.log(this.$store.state.currentTag);
+
       return this.$store.state.currentTag
     }
 
@@ -35,6 +37,7 @@
       const id = this.$route.params.id
       this.$store.commit('fetchTags')
       this.$store.commit('setCurrentTag',id)
+
       if (!this.currentTag) {
         this.$router.replace('/404'); //push回退不了
       }
@@ -45,12 +48,12 @@
     }
 
     remove() {
-      this.$store.commit('removeTag',this.currentTag.id)
       this.goBack()
+      this.$store.commit('removeTag',this.currentTag.id)
     }
 
     goBack() {
-      this.$router.back();
+      this.$router.replace('/labels');
     }
   }
 </script>
