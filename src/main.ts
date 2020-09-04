@@ -21,18 +21,6 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 
-let toURL:any = null
-router.beforeEach((to, from, next) => {
-  if (toURL === to.path) {
-    next()
-  }
-  if (to.path !== from.path) {
-    toURL = to.path
-    router.replace(to.path)
-    next()
-  }
-})
-
 
 window.addEventListener("load",function() {
   setTimeout(function(){

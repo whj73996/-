@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-  import Vue from  "vue"
+  import Vue from 'vue';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
@@ -29,65 +29,66 @@
   //export {model} 也可以这么导出
 
 
-
   @Component({
-    components:{Tabs, Button, Tags,FormItem,NumberPad},
+    components: {Tabs, Button, Tags, FormItem, NumberPad},
 
   })
-  export default class Money extends Vue{
+  export default class Money extends Vue {
 
     @Watch('isClear')
-    onIsClearChanged(){
-      if(this.isClear)this.record.notes=''
+    onIsClearChanged() {
+      if (this.isClear) this.record.notes = '';
     }
 
-    beforeCreate(){
-      if(this.$store.state.tagList.length===0){
-        this.$store.commit('createTag','衣')
-        this.$store.commit('createTag','食')
-        this.$store.commit('createTag','住')
-        this.$store.commit('createTag','行')
-        this.$store.commit('createTag','娱')
+    created() {
+      this.$store.commit('fetchRecords');
+      this.$store.commit('fetchTags');
+      if (this.$store.state.tagList.length === 0) {
+        this.$store.commit('createTag', '衣');
+        this.$store.commit('createTag', '食');
+        this.$store.commit('createTag', '住');
+        this.$store.commit('createTag', '行');
+        this.$store.commit('createTag', '娱');
       }
     }
 
-    recordTypeList=recordTypeList
-    isClear=false
-    get recordList(){
-      return this.$store.state.recordList
+    recordTypeList = recordTypeList;
+    isClear = false;
+
+    get recordList() {
+      return this.$store.state.recordList;
     }
 
-    record: RecordItem={
-      tags:[],
-      notes:'',
-      type:'-',
-      amount:0
+    record: RecordItem = {
+      tags: [],
+      notes: '',
+      type: '-',
+      amount: 0
     };
-    created(){
-      this.$store.commit('fetchRecords')
-      this.$store.commit('fetchTags')
+
+
+    saveRecord() {
+      if (this.record.tags.length === 0) {
+        this.isClear = false;
+        return window.alert('请选择类型');
+      }
+      this.$store.commit('createRecord', this.record);
+      this.isClear = true;
     }
 
-    saveRecord(){
-      if(this.record.tags.length===0){
-        this.isClear=false
-        return window.alert('请选择类型')
-      }
-      this.$store.commit('createRecord',this.record)
-      this.isClear=true
-    }
     onUpdateTags(value: Tag[]) {
-      this.record.tags = value
+      this.record.tags = value;
     }
   }
 </script>
 
 <style lang="scss" scoped>
-   ::v-deep .layout-content{
+  ::v-deep .layout-content {
     display: flex;
     flex-direction: column-reverse;
   }
-  .notes{
+
+  .notes {
     padding: 12px 0;
   }
 </style>
