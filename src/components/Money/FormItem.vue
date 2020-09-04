@@ -58,9 +58,9 @@
       height: 30px;
       width: 30px;
       margin-right: 5px;
+      transition: all 0.3s;
 
       &.active{
-        transition: all 0.3s;
         transform: scale(1.3);
         color: $selected-color;
       }
