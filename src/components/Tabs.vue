@@ -1,14 +1,17 @@
 <template>
   <div>
     <ul class="tabs">
-      <li v-for="item in dataSource"
+      <li v-for="(item,index) in dataSource"
           :key="item.value"
           class="tabs-item"
           :class="liClass(item)"
-          @click="select(item)">{{item.text}}
+          @click="select(item,index)">
+        {{item.text}}
       </li>
+      <transition>
+        <span class="selected-dot" :class="{move1:tab===1,move0:tab===0}"></span>
+      </transition>
     </ul>
-
   </div>
 </template>
 
@@ -25,6 +28,8 @@
     @Prop({required: true, type: Array})
     dataSource!: { text: string; value: string }[];
 
+    tab=0
+
     liClass(item: DataSourceItem) {
       return {
         selected: item.value === this.value,
@@ -32,8 +37,9 @@
       };
     }
 
-    select(item: DataSourceItem) {
+    select(item: DataSourceItem,index:string) {
       this.$emit('update:value', item.value);
+      this.tab = parseInt(index)
     }
   }
 </script>
@@ -46,6 +52,28 @@
     display: flex;
     text-align: center;
     font-size: 24px;
+    position: relative;
+
+
+    .selected-dot{
+      width: 50%;
+      height: 4px;
+      background:darken($selected-color,3%);
+      position:absolute;
+      bottom: 0;
+      transition: all 0.3s ease;
+
+
+      &.move1{
+        left: 50%;
+        /*transform: translateX(50vw);*/
+      }
+      &.move0{
+        left: 0;
+        /*transform: translateX(0);*/
+      }
+    }
+
 
     &-item {
       width: 50%;
@@ -55,7 +83,7 @@
       align-items: center;
       position: relative;
 
-            &.selected::after {
+/*            &.selected::after {
               content: '';
               position: absolute;
               bottom: 0;
@@ -75,7 +103,7 @@
         100% {
           transform: translateX(0%);
         }
-      }
+      }*/
     }
   }
 </style>
